@@ -11,20 +11,17 @@
       box-sizing: border-box;
     }
 
-    /* Updated body to be scrollable & use device-height for mobile */
+    /* Updated background with elegant gradient and soft texture */
     body {
       width: 100vw;
-      min-height: 100dvh;
-      /* allow scrolling on small devices instead of clipping content */
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
+      height: 100vh;
+      overflow: hidden;
       background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #ffe4f0 100%);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      padding: 2vh 0; /* give breathing room on small screens */
     }
 
     /* Added floating hearts animation background */
@@ -75,20 +72,17 @@
       }
     }
 
-    /* Improved book container with better styling (responsive) */
+    /* Improved book container with better styling */
     #book {
-      /* prefer a responsive width but cap at 900px */
-      width: min(90vw, 900px);
-      /* don't force a fixed height; use aspect-ratio and limit by viewport */
-      height: auto;
-      max-height: 85vh;
-      max-width: 100%;
+      width: 55vw;
+      height: 60vh;
+      max-width: 900px;
+      max-height: 680px;
       position: relative;
       perspective: 1200px;
       z-index: 10;
       filter: drop-shadow(0 20px 60px rgba(255, 105, 180, 0.2));
       aspect-ratio: 16 / 9;
-      margin: 0 auto;
     }
 
     /* Improved spine styling with gradient */
@@ -119,8 +113,6 @@
       z-index: 5;
       cursor: pointer;
       overflow: hidden;
-      -webkit-touch-callout: none;
-      touch-action: manipulation;
     }
 
     .page:hover {
@@ -298,8 +290,10 @@
     @media (max-width: 1024px) {
       #book {
         width: 85vw;
-        height: auto;
-        max-height: 80vh;
+        height: 70vh;
+        max-width: 100%;
+        max-height: 600px;
+        aspect-ratio: 16 / 9;
         perspective: 900px;
       }
 
@@ -325,25 +319,22 @@
     @media (max-width: 768px) {
       #book {
         width: 95vw;
-        height: auto;
-        max-height: 78vh;
+        height: 75vh;
+        max-width: none;
+        max-height: 500px;
         aspect-ratio: 16 / 9;
         perspective: 700px;
         filter: drop-shadow(0 15px 40px rgba(255, 105, 180, 0.15));
       }
 
-      /* Make each page full width on smaller screens for better touch UX */
-      .page {
-        width: 100%;
-        left: 0;
-        transition: transform 1.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        box-shadow: -8px 12px 30px rgba(0, 0, 0, 0.12);
-        transform-origin: 0% 50%;
+      #book::before {
+        width: 3%;
+        box-shadow: -3px 8px 15px rgba(0, 0, 0, 0.2), 3px 8px 15px rgba(0, 0, 0, 0.1);
       }
 
-      /* ensure label tap area remains full page */
-      label {
-        -webkit-tap-highlight-color: transparent;
+      .page {
+        transition: transform 1.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        box-shadow: -8px 12px 30px rgba(0, 0, 0, 0.12);
       }
 
       #page1 .front {
@@ -377,25 +368,31 @@
 
     @media (max-width: 480px) {
       body {
-        height: auto;
+        height: 100dvh;
       }
 
       #book {
         width: 98vw;
-        height: auto;
-        max-height: 75vh;
+        height: 80vh;
         max-width: none;
+        max-height: 450px;
         aspect-ratio: 16 / 9;
         perspective: 600px;
         filter: drop-shadow(0 10px 30px rgba(255, 105, 180, 0.1));
       }
 
-      /* pages full width on very small screens */
+      #book::before {
+        width: 4%;
+        box-shadow: -2px 6px 12px rgba(0, 0, 0, 0.15), 2px 6px 12px rgba(0, 0, 0, 0.08);
+      }
+
       .page {
-        width: 100%;
-        left: 0;
         transition: transform 1.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         box-shadow: -6px 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .page:hover {
+        filter: brightness(1.03);
       }
 
       #page1 .front {
@@ -590,25 +587,6 @@
         setTimeout(() => heart.remove(), 10000);
       }
     }, 2000);
-
-    // Adjust #book max-height for different viewport sizes (helps on mobile/rotation)
-    (function adjustBook() {
-      const book = document.getElementById('book');
-      if (!book) return;
-
-      function resize() {
-        // keep a comfortable max height relative to viewport
-        const maxH = Math.round(Math.min(window.innerHeight * 0.85, 800));
-        book.style.maxHeight = maxH + 'px';
-        // clear fixed height to let aspect-ratio drive the layout
-        book.style.height = 'auto';
-      }
-
-      window.addEventListener('resize', resize, { passive: true });
-      window.addEventListener('orientationchange', resize, { passive: true });
-      window.addEventListener('load', resize);
-      resize();
-    })();
   </script>
 </body>
 </html>
