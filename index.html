@@ -138,6 +138,18 @@
 
     .back {
       transform: scaleX(-1);
+      background: linear-gradient(to right, #f9f3e9, #f4eee4);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset -7px 0 15px -4px rgba(0,0,0,0.1);
+      border: 1px solid rgba(0,0,0,0.05);
+      background-image: 
+        linear-gradient(to right, #f9f3e9, #f4eee4),
+        url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z' fill='%23f0e6d6' fill-opacity='.4'/%3E%3C/svg%3E");
     }
 
     input {
@@ -189,27 +201,43 @@
     .page .front img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Changed from cover to contain to prevent cropping */
+      object-fit: cover; /* Changed from contain to cover for full page coverage */
       display: block;
       border-radius: 2px;
-      background-color: #fff; /* Added background for letterboxing */
     }
 
     /* Back page text styling with elegant design */
-    .page .back .short-text {
-      margin: 0;
-      font-size: clamp(1.5rem, 3.5vh, 3rem);
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-align: center;
-      color: #d946a6;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      animation: pulse 2s ease-in-out infinite;
+    .page .back .book-back {
+      padding: clamp(1rem, 3vh, 3rem);
+      box-sizing: border-box;
+      text-align: left;
+      color: #6b4f45;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      max-width: 100%;
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
+    .book-back .bb-title {
+      font-size: clamp(1.1rem, 2.6vh, 1.6rem);
+      font-weight: 700;
+      margin: 0 0 0.4rem 0;
+      color: #8b5a4f;
+      letter-spacing: 0.4px;
+    }
+    .book-back .bb-desc {
+      font-size: clamp(0.95rem, 2vh, 1.15rem);
+      margin: 0 0 0.6rem 0;
+      color: #5b4037;
+      white-space: normal;
+    }
+    .book-back .bb-footer {
+      font-size: 0.85rem;
+      color: #a07f75;
+      text-align: right;
+      opacity: 0.9;
     }
 
     /* Title page with heart animation */
@@ -393,9 +421,9 @@
         font-size: clamp(0.7rem, 1.2vw, 1rem);
       }
 
-      /* Reduce animation complexity for better mobile performance */
+      /* Pastikan animasi love tetap muncul di mobile */
       .floating-hearts {
-        display: block;
+        display: block !important;
       }
       
       /* Optimize for touch interactions */
@@ -485,105 +513,225 @@
     <input type="checkbox" id="sixteen">
     <div id="page16" class="page">
       <div class="front"><img src="a6.jpg" alt="Photo 16"></div>
-      <div class="back"><div class="short-text">💖</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 16</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 16. Tulis cerita, tanggal, atau kenangan singkat di sini.</p>
+          </div>
+          <div class="bb-footer">Halaman 16</div>
+        </div>
+      </div>
       <label for="sixteen"></label>
     </div>
-
+    
     <input type="checkbox" id="fifteen">
     <div id="page15" class="page">
       <div class="front"><img src="p1.jpg" alt="Photo 15"></div>
-      <div class="back"><div class="short-text">💕</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 15</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 15. Ganti isi sesuai cerita Anda.</p>
+          </div>
+          <div class="bb-footer">Halaman 15</div>
+        </div>
+      </div>
       <label for="fifteen"></label>
     </div>
 
     <input type="checkbox" id="fourteen">
     <div id="page14" class="page">
       <div class="front"><img src="k3.jpg" alt="Photo 14"></div>
-      <div class="back"><div class="short-text">💝</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 14</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 14.</p>
+          </div>
+          <div class="bb-footer">Halaman 14</div>
+        </div>
+      </div>
       <label for="fourteen"></label>
     </div>
 
     <input type="checkbox" id="thirteen">
     <div id="page13" class="page">
       <div class="front"><img src="a4.jpg" alt="Photo 13"></div>
-      <div class="back"><div class="short-text">💗</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 13</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 13.</p>
+          </div>
+          <div class="bb-footer">Halaman 13</div>
+        </div>
+      </div>
       <label for="thirteen"></label>
     </div>
 
     <input type="checkbox" id="twelve">
     <div id="page12" class="page">
       <div class="front"><img src="p2.jpg" alt="Photo 12"></div>
-      <div class="back"><div class="short-text">💞</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 12</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 12.</p>
+          </div>
+          <div class="bb-footer">Halaman 12</div>
+        </div>
+      </div>
       <label for="twelve"></label>
     </div>
 
     <input type="checkbox" id="eleven">
     <div id="page11" class="page">
       <div class="front"><img src="a3.jpg" alt="Photo 11"></div>
-      <div class="back"><div class="short-text">💘</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 11</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 11.</p>
+          </div>
+          <div class="bb-footer">Halaman 11</div>
+        </div>
+      </div>
       <label for="eleven"></label>
     </div>
 
     <input type="checkbox" id="ten">
     <div id="page10" class="page">
       <div class="front"><img src="k1.jpg" alt="Photo 10"></div>
-      <div class="back"><div class="short-text">💓</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 10</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 10.</p>
+          </div>
+          <div class="bb-footer">Halaman 10</div>
+        </div>
+      </div>
       <label for="ten"></label>
     </div>
 
     <input type="checkbox" id="nine">
     <div id="page9" class="page">
       <div class="front"><img src="a1.jpg" alt="Photo 9"></div>
-      <div class="back"><div class="short-text">💖</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 9</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 9.</p>
+          </div>
+          <div class="bb-footer">Halaman 9</div>
+        </div>
+      </div>
       <label for="nine"></label>
     </div>
 
     <input type="checkbox" id="eight">
     <div id="page8" class="page">
       <div class="front"><img src="a2.jpg" alt="Photo 8"></div>
-      <div class="back"><div class="short-text">💕</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 8</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 8.</p>
+          </div>
+          <div class="bb-footer">Halaman 8</div>
+        </div>
+      </div>
       <label for="eight"></label>
     </div>
 
     <input type="checkbox" id="seven">
     <div id="page7" class="page">
       <div class="front"><img src="p3.jpg" alt="Photo 7"></div>
-      <div class="back"><div class="short-text">💝</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 7</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 7.</p>
+          </div>
+          <div class="bb-footer">Halaman 7</div>
+        </div>
+      </div>
       <label for="seven"></label>
     </div>
 
     <input type="checkbox" id="six">
     <div id="page6" class="page">
       <div class="front"><img src="k4.jpg" alt="Photo 6"></div>
-      <div class="back"><div class="short-text">💗</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 6</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 6.</p>
+          </div>
+          <div class="bb-footer">Halaman 6</div>
+        </div>
+      </div>
       <label for="six"></label>
     </div>
 
     <input type="checkbox" id="five">
     <div id="page5" class="page">
       <div class="front"><img src="k2.jpg" alt="Photo 5"></div>
-      <div class="back"><div class="short-text">💞</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 5</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 5.</p>
+          </div>
+          <div class="bb-footer">Halaman 5</div>
+        </div>
+      </div>
       <label for="five"></label>
     </div>
 
     <input type="checkbox" id="three">
     <div id="page3" class="page">
       <div class="front"><img src="k4.jpg" alt="Photo 3"></div>
-      <div class="back"><div class="short-text">💘</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 3</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 3.</p>
+          </div>
+          <div class="bb-footer">Halaman 3</div>
+        </div>
+      </div>
       <label for="three"></label>
     </div>
 
     <input type="checkbox" id="two">
     <div id="page2" class="page">
       <div class="front"><img src="fotor.jpg" alt="Photo 2"></div>
-      <div class="back"><div class="short-text">💓</div></div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Judul Foto 2</h3>
+            <p class="bb-desc">Deskripsi singkat untuk foto 2.</p>
+          </div>
+          <div class="bb-footer">Halaman 2</div>
+        </div>
+      </div>
       <label for="two"></label>
     </div>
 
     <input type="checkbox" id="one">
     <div id="page1" class="page">
       <div class="front">CINTA</div>
-      <div class="back">OUR LOVE</div>
+      <div class="back">
+        <div class="book-back">
+          <div>
+            <h3 class="bb-title">Tentang Buku Ini</h3>
+            <p class="bb-desc">Ini adalah kumpulan momen dan foto kami. Di halaman terakhir ini tercatat kisah singkat, tanggal, dan catatan hati sebagai penutup buku kenangan.</p>
+          </div>
+          <div class="bb-footer">Terima kasih telah membaca • Halaman terakhir</div>
+        </div>
+      </div>
       <label for="one"></label>
     </div>
   </div>
@@ -599,6 +747,8 @@
       // Adjust number of hearts based on screen size
       const heartCount = window.innerWidth < 480 ? 8 : 15;
       
+      // Bersihkan dulu agar di mobile tidak menumpuk
+      container.innerHTML = '';
       for (let i = 0; i < heartCount; i++) {
         const heart = document.createElement('div');
         heart.className = 'heart';
@@ -611,8 +761,9 @@
       }
     }
 
-    // Initialize floating hearts on load
+    // Pastikan floating hearts muncul di mobile
     window.addEventListener('load', createFloatingHearts);
+    window.addEventListener('resize', createFloatingHearts);
 
     // Handle page turning with click guard
     document.getElementById('book').addEventListener('click', function(e) {
@@ -651,6 +802,18 @@
 
       // safe default volume
       bgMusic.volume = 0.6;
+
+      // Handle page visibility change
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          bgMusic.pause();
+        } else {
+          // Only resume if overlay is not visible (meaning user has already interacted)
+          if (playOverlay.style.display === 'none') {
+            bgMusic.play().catch(() => {/* ignore */});
+          }
+        }
+      });
 
       // Try to play; show overlay if blocked
       function tryPlayMusic() {
