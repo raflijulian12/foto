@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💕 Buku Cinta Kami 💕</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Updated background with elegant gradient and soft texture */
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #ffe4f0 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Added floating hearts animation background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 192, 203, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Floating hearts decoration */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0;
+      animation: float 6s infinite ease-in;
+    }
+
+    @keyframes float {
+      0% {
+        opacity: 0.6;
+        transform: translateY(100vh) translateX(0);
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100vh) translateX(50px);
+      }
+    }
+
+    /* Redesigned book container with better styling */
+    #book {
+      width: 55vw;
+      height: 60vh;
+      max-width: 900px;
+      position: relative;
+      perspective: 1200px;
+      z-index: 10;
+      filter: drop-shadow(0 20px 60px rgba(255, 105, 180, 0.2));
+    }
+
+    /* Improved spine styling with gradient */
+    #book::before {
+      width: 2%;
+      height: 100%;
+      background: linear-gradient(90deg, #d4949f 0%, #8b5a6b 50%, #d4949f 100%);
+      content: '';
+      position: absolute;
+      left: 49%;
+      top: 0;
+      box-shadow: -5px 10px 20px rgba(0, 0, 0, 0.2), 5px 10px 20px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+
+    /* Enhanced page styling with better shadow and border */
+    .page {
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to bottom right, #fff9fc 0%, #fff0f7 100%);
+      border-radius: 2px;
+      box-shadow: -10px 15px 35px rgba(0, 0, 0, 0.15);
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transition: transform 2.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      transform-origin: 0% 50%;
+      z-index: 5;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .page:hover {
+      filter: brightness(1.05);
+    }
+
+    /* Improved front and back page styling */
+    .front, .back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      backface-visibility: hidden;
+    }
+
+    .front {
+      opacity: 1;
+    }
+
+    .back {
+      transform: scaleX(-1);
+    }
+
+    input {
+      visibility: hidden;
+    }
+
+    label {
+      width: 100%;
+      height: 100%;
+      z-index: 99;
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    input:checked + .page {
+      transform: rotateY(-180deg);
+    }
+
+    input:checked + .page .front {
+      opacity: 0;
+    }
+
+    input:checked + .page .back {
+      opacity: 1;
+    }
+
+    /* Updated z-index layers */
+    #sixteen:checked + .page { z-index: 16; }
+    #fifteen:checked + .page { z-index: 15; }
+    #fourteen:checked + .page { z-index: 14; }
+    #thirteen:checked + .page { z-index: 13; }
+    #twelve:checked + .page { z-index: 12; }
+    #eleven:checked + .page { z-index: 11; }
+    #ten:checked + .page { z-index: 10; }
+    #nine:checked + .page { z-index: 9; }
+    #eight:checked + .page { z-index: 8; }
+    #seven:checked + .page { z-index: 7; }
+    #six:checked + .page { z-index: 6; }
+    #five:checked + .page { z-index: 5; }
+    #three:checked + .page { z-index: 3; }
+    #two:checked + .page { z-index: 2; }
+    #one:checked + .page { z-index: 1; }
+
+    /* Photo display styling */
+    .page .front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 2px;
+    }
+
+    /* Back page text styling with elegant design */
+    .page .back .short-text {
+      margin: 0;
+      font-size: 3.5vh;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #d946a6;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Title page with heart animation */
+    #page1 .front {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      font-size: 8vh;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2vh;
+      animation: titlePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    #page1 .front::after {
+      content: '💕';
+      font-size: 10vh;
+      animation: heartBeat 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.3); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    #page1 .back {
+      background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+      font-size: 4vh;
+      color: #d946a6;
+      font-weight: 700;
+      letter-spacing: 2px;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px rgba(217, 70, 166, 0.5); }
+      50% { text-shadow: 0 0 20px rgba(217, 70, 166, 0.8); }
+    }
+
+    /* Instruction text at bottom */
+    .instruction {
+      position: absolute;
+      bottom: 3vh;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #d946a6;
+      font-size: 2.2vh;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+      z-index: 11;
+      letter-spacing: 0.5px;
+      animation: fadeInOut 3s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Click delay prevention */
+    .click-guard {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating hearts background decoration -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <div id="book">
+    <input type="checkbox" id="sixteen">
+    <div id="page16" class="page">
+      <div class="front"><img src="a6.jpg" alt="Photo 16"></div>
+      <div class="back"><div class="short-text">💖</div></div>
+      <label for="sixteen"></label>
+    </div>
+
+    <input type="checkbox" id="fifteen">
+    <div id="page15" class="page">
+      <div class="front"><img src="p1.jpg" alt="Photo 15"></div>
+      <div class="back"><div class="short-text">💕</div></div>
+      <label for="fifteen"></label>
+    </div>
+
+    <input type="checkbox" id="fourteen">
+    <div id="page14" class="page">
+      <div class="front"><img src="k3.jpg" alt="Photo 14"></div>
+      <div class="back"><div class="short-text">💝</div></div>
+      <label for="fourteen"></label>
+    </div>
+
+    <input type="checkbox" id="thirteen">
+    <div id="page13" class="page">
+      <div class="front"><img src="a4.jpg" alt="Photo 13"></div>
+      <div class="back"><div class="short-text">💗</div></div>
+      <label for="thirteen"></label>
+    </div>
+
+    <input type="checkbox" id="twelve">
+    <div id="page12" class="page">
+      <div class="front"><img src="p2.jpg" alt="Photo 12"></div>
+      <div class="back"><div class="short-text">💞</div></div>
+      <label for="twelve"></label>
+    </div>
+
+    <input type="checkbox" id="eleven">
+    <div id="page11" class="page">
+      <div class="front"><img src="a3.jpg" alt="Photo 11"></div>
+      <div class="back"><div class="short-text">💘</div></div>
+      <label for="eleven"></label>
+    </div>
+
+    <input type="checkbox" id="ten">
+    <div id="page10" class="page">
+      <div class="front"><img src="k1.jpg" alt="Photo 10"></div>
+      <div class="back"><div class="short-text">💓</div></div>
+      <label for="ten"></label>
+    </div>
+
+    <input type="checkbox" id="nine">
+    <div id="page9" class="page">
+      <div class="front"><img src="a1.jpg" alt="Photo 9"></div>
+      <div class="back"><div class="short-text">💖</div></div>
+      <label for="nine"></label>
+    </div>
+
+    <input type="checkbox" id="eight">
+    <div id="page8" class="page">
+      <div class="front"><img src="a2.jpg" alt="Photo 8"></div>
+      <div class="back"><div class="short-text">💕</div></div>
+      <label for="eight"></label>
+    </div>
+
+    <input type="checkbox" id="seven">
+    <div id="page7" class="page">
+      <div class="front"><img src="p3.jpg" alt="Photo 7"></div>
+      <div class="back"><div class="short-text">💝</div></div>
+      <label for="seven"></label>
+    </div>
+
+    <input type="checkbox" id="six">
+    <div id="page6" class="page">
+      <div class="front"><img src="k4.jpg" alt="Photo 6"></div>
+      <div class="back"><div class="short-text">💗</div></div>
+      <label for="six"></label>
+    </div>
+
+    <input type="checkbox" id="five">
+    <div id="page5" class="page">
+      <div class="front"><img src="k2.jpg" alt="Photo 5"></div>
+      <div class="back"><div class="short-text">💞</div></div>
+      <label for="five"></label>
+    </div>
+
+    <input type="checkbox" id="three">
+    <div id="page3" class="page">
+      <div class="front"><img src="k4.jpg" alt="Photo 3"></div>
+      <div class="back"><div class="short-text">💘</div></div>
+      <label for="three"></label>
+    </div>
+
+    <input type="checkbox" id="two">
+    <div id="page2" class="page">
+      <div class="front"><img src="fotor.jpg" alt="Photo 2"></div>
+      <div class="back"><div class="short-text">💓</div></div>
+      <label for="two"></label>
+    </div>
+
+    <input type="checkbox" id="one">
+    <div id="page1" class="page">
+      <div class="front">CINTA</div>
+      <div class="back">OUR LOVE</div>
+      <label for="one"></label>
+    </div>
+  </div>
+
+  <!-- Instruction text with animation -->
+  <div class="instruction">💌 Klik halaman untuk membuka 💌</div>
+
+  <script>
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      const hearts = ['💕', '💖', '💗', '💝', '💞', '💘', '💓'];
+      
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDelay = Math.random() * 6 + 's';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        heart.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        container.appendChild(heart);
+      }
+    }
+
+    // Initialize floating hearts on load
+    window.addEventListener('load', createFloatingHearts);
+
+    document.getElementById('book').addEventListener('click', function(e) {
+      e.currentTarget.style.pointerEvents = "none";
+      setTimeout(function() {
+        document.getElementById('book').style.pointerEvents = "";
+      }, 2200);
+    });
+
+    setInterval(() => {
+      const hearts = document.querySelectorAll('.heart');
+      if (hearts.length < 8) {
+        const container = document.getElementById('floatingHearts');
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        const heartEmojis = ['💕', '💖', '💗', '💝', '💞', '💘', '💓'];
+        heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDelay = '0s';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        heart.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        container.appendChild(heart);
+        
+        setTimeout(() => heart.remove(), 10000);
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
