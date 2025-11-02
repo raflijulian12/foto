@@ -53,7 +53,7 @@
 
     .heart {
       position: absolute;
-      font-size: 2rem;
+      font-size: clamp(1rem, 2vw, 2rem);
       opacity: 0;
       animation: float 6s infinite ease-in;
     }
@@ -72,12 +72,10 @@
       }
     }
 
-    /* Improved book container with better styling */
+    /* Improved book container with better responsive sizing */
     #book {
-      width: 55vw;
-      height: 60vh;
-      max-width: 900px;
-      max-height: 680px;
+      width: min(90vw, 900px);
+      height: min(70vh, 600px); /* Reduced height for mobile */
       position: relative;
       perspective: 1200px;
       z-index: 10;
@@ -187,19 +185,20 @@
     #two:checked + .page { z-index: 2; }
     #one:checked + .page { z-index: 1; }
 
-    /* Photo display styling */
+    /* Photo display styling - FIXED FOR MOBILE */
     .page .front img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain; /* Changed from cover to contain to prevent cropping */
       display: block;
       border-radius: 2px;
+      background-color: #fff; /* Added background for letterboxing */
     }
 
     /* Back page text styling with elegant design */
     .page .back .short-text {
       margin: 0;
-      font-size: 3.5vh;
+      font-size: clamp(1.5rem, 3.5vh, 3rem);
       font-weight: 600;
       letter-spacing: 1px;
       text-align: center;
@@ -216,7 +215,7 @@
     /* Title page with heart animation */
     #page1 .front {
       background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
-      font-size: 8vh;
+      font-size: clamp(2rem, 8vh, 5rem);
       font-weight: 900;
       color: white;
       text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -235,7 +234,7 @@
 
     #page1 .front::after {
       content: '💕';
-      font-size: 10vh;
+      font-size: clamp(2.5rem, 10vh, 6rem);
       animation: heartBeat 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
     }
 
@@ -249,7 +248,7 @@
 
     #page1 .back {
       background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
-      font-size: 4vh;
+      font-size: clamp(1.5rem, 4vh, 3rem);
       color: #d946a6;
       font-weight: 700;
       letter-spacing: 2px;
@@ -268,7 +267,7 @@
       left: 50%;
       transform: translateX(-50%);
       color: #d946a6;
-      font-size: 2.2vh;
+      font-size: clamp(0.8rem, 2.2vh, 1.2rem);
       font-weight: 600;
       text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
       z-index: 11;
@@ -286,43 +285,50 @@
       pointer-events: none;
     }
 
-    /* Added responsive design for mobile devices */
+    /* Added audio control styles */
+    .audio-control {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.45);
+      z-index: 9999;
+      pointer-events: auto;
+    }
+    .audio-control button {
+      background: linear-gradient(90deg,#ff6aa9,#ff3b8d);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 1.4rem;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+    .audio-control button:active { transform: scale(0.98); }
+
+    /* Enhanced responsive design for mobile devices */
     @media (max-width: 1024px) {
       #book {
-        width: 85vw;
-        height: 70vh;
-        max-width: 100%;
-        max-height: 600px;
-        aspect-ratio: 16 / 9;
+        width: min(85vw, 800px);
+        height: min(65vh, 550px); /* Reduced height */
         perspective: 900px;
       }
 
-      #page1 .front {
-        font-size: 6vh;
-        gap: 1.5vh;
+      #book::before {
+        width: 2.5%;
       }
 
-      #page1 .front::after {
-        font-size: 8vh;
-      }
-
-      .page .back .short-text {
-        font-size: 3vh;
-      }
-
-      .instruction {
-        font-size: 2vh;
-        bottom: 2.5vh;
+      .page {
+        transition: transform 1.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       }
     }
 
     @media (max-width: 768px) {
       #book {
-        width: 95vw;
-        height: 75vh;
-        max-width: none;
-        max-height: 500px;
-        aspect-ratio: 16 / 9;
+        width: min(95vw, 700px);
+        height: min(60vh, 450px); /* Reduced height */
         perspective: 700px;
         filter: drop-shadow(0 15px 40px rgba(255, 105, 180, 0.15));
       }
@@ -333,50 +339,33 @@
       }
 
       .page {
-        transition: transform 1.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        transition: transform 1.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         box-shadow: -8px 12px 30px rgba(0, 0, 0, 0.12);
       }
 
-      #page1 .front {
-        font-size: 5.5vh;
-        gap: 1.2vh;
-      }
-
-      #page1 .front::after {
-        font-size: 7vh;
-      }
-
-      #page1 .back {
-        font-size: 3.5vh;
-        letter-spacing: 1.5px;
-      }
-
-      .page .back .short-text {
-        font-size: 2.5vh;
-        letter-spacing: 0.5px;
+      .page:hover {
+        filter: brightness(1.03);
       }
 
       .instruction {
-        font-size: 1.8vh;
         bottom: 2vh;
       }
 
       .heart {
-        font-size: 1.2rem;
+        font-size: clamp(0.8rem, 1.5vw, 1.2rem);
       }
     }
 
     @media (max-width: 480px) {
       body {
         height: 100dvh;
+        overflow: auto;
+        padding: 10px 0;
       }
 
       #book {
-        width: 98vw;
-        height: 80vh;
-        max-width: none;
-        max-height: 450px;
-        aspect-ratio: 16 / 9;
+        width: 95vw;
+        height: min(55vh, 400px); /* Significantly reduced height for mobile */
         perspective: 600px;
         filter: drop-shadow(0 10px 30px rgba(255, 105, 180, 0.1));
       }
@@ -387,7 +376,7 @@
       }
 
       .page {
-        transition: transform 1.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        transition: transform 1.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         box-shadow: -6px 10px 25px rgba(0, 0, 0, 0.1);
       }
 
@@ -395,36 +384,87 @@
         filter: brightness(1.03);
       }
 
-      #page1 .front {
-        font-size: 4.5vh;
-        gap: 1vh;
-      }
-
-      #page1 .front::after {
-        font-size: 5.5vh;
-      }
-
-      #page1 .back {
-        font-size: 3vh;
-        letter-spacing: 1px;
-      }
-
-      .page .back .short-text {
-        font-size: 2vh;
-        letter-spacing: 0px;
-      }
-
       .instruction {
-        font-size: 1.5vh;
         bottom: 1.5vh;
+        font-size: clamp(0.7rem, 2vh, 1rem);
       }
 
       .heart {
-        font-size: 1rem;
+        font-size: clamp(0.7rem, 1.2vw, 1rem);
       }
 
+      /* Reduce animation complexity for better mobile performance */
       .floating-hearts {
-        display: none;
+        display: block;
+      }
+      
+      /* Optimize for touch interactions */
+      .page {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 360px) {
+      #book {
+        width: 98vw;
+        height: min(50vh, 350px); /* Further reduced height */
+      }
+      
+      #book::before {
+        width: 5%;
+      }
+      
+      .instruction {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Force landscape on mobile */
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+      body {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        width: 100vh;
+        height: 100vw;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+      }
+      
+      #book {
+        width: 90vh;
+        height: 80vw;
+      }
+      
+      .instruction {
+        transform: rotate(90deg);
+        bottom: 45%;
+        left: unset;
+        right: -45%;
+        width: 100vh;
+      }
+      
+      .floating-hearts {
+        transform: rotate(90deg);
+        transform-origin: left top;
+        width: 100vh;
+        height: 100vw;
+      }
+    }
+
+    /* Orientation-specific adjustments */
+    @media (max-height: 500px) and (orientation: landscape) {
+      #book {
+        height: 85vh;
+        width: auto;
+        aspect-ratio: 16/9;
+      }
+      
+      .instruction {
+        bottom: 1vh;
       }
     }
   </style>
@@ -432,6 +472,14 @@
 <body>
   <!-- Floating hearts background decoration -->
   <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- Added background audio element -->
+  <audio id="bgMusic" src="armada.mp3" loop preload="auto"></audio>
+
+  <!-- Play overlay shown if autoplay blocked -->
+  <div id="playOverlay" class="audio-control" aria-hidden="true">
+    <button id="playButton" type="button">klik untuk melihat</button>
+  </div>
 
   <div id="book">
     <input type="checkbox" id="sixteen">
@@ -548,14 +596,17 @@
       const container = document.getElementById('floatingHearts');
       const hearts = ['💕', '💖', '💗', '💝', '💞', '💘', '💓'];
       
-      for (let i = 0; i < 15; i++) {
+      // Adjust number of hearts based on screen size
+      const heartCount = window.innerWidth < 480 ? 8 : 15;
+      
+      for (let i = 0; i < heartCount; i++) {
         const heart = document.createElement('div');
         heart.className = 'heart';
         heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
         heart.style.left = Math.random() * 100 + '%';
         heart.style.animationDelay = Math.random() * 6 + 's';
         heart.style.animationDuration = (4 + Math.random() * 4) + 's';
-        heart.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        heart.style.fontSize = (window.innerWidth < 480 ? 0.8 : 1.5 + Math.random() * 2) + 'rem';
         container.appendChild(heart);
       }
     }
@@ -563,6 +614,7 @@
     // Initialize floating hearts on load
     window.addEventListener('load', createFloatingHearts);
 
+    // Handle page turning with click guard
     document.getElementById('book').addEventListener('click', function(e) {
       e.currentTarget.style.pointerEvents = "none";
       setTimeout(function() {
@@ -570,9 +622,12 @@
       }, 2200);
     });
 
+    // Maintain floating hearts
     setInterval(() => {
       const hearts = document.querySelectorAll('.heart');
-      if (hearts.length < 8) {
+      const maxHearts = window.innerWidth < 480 ? 5 : 8;
+      
+      if (hearts.length < maxHearts) {
         const container = document.getElementById('floatingHearts');
         const heart = document.createElement('div');
         heart.className = 'heart';
@@ -581,12 +636,68 @@
         heart.style.left = Math.random() * 100 + '%';
         heart.style.animationDelay = '0s';
         heart.style.animationDuration = (4 + Math.random() * 4) + 's';
-        heart.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+        heart.style.fontSize = (window.innerWidth < 480 ? 0.8 : 1.5 + Math.random() * 2) + 'rem';
         container.appendChild(heart);
         
         setTimeout(() => heart.remove(), 10000);
       }
     }, 2000);
+
+    // Audio handling
+    (function() {
+      const bgMusic = document.getElementById('bgMusic');
+      const playOverlay = document.getElementById('playOverlay');
+      const playButton = document.getElementById('playButton');
+
+      // safe default volume
+      bgMusic.volume = 0.6;
+
+      // Try to play; show overlay if blocked
+      function tryPlayMusic() {
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            // Autoplay succeeded: hide overlay if visible
+            if (playOverlay) playOverlay.style.display = 'none';
+          }).catch(() => {
+            // Autoplay blocked: show overlay so user can start playback
+            if (playOverlay) {
+              playOverlay.style.display = 'flex';
+              playOverlay.setAttribute('aria-hidden', 'false');
+            }
+          });
+        }
+      }
+
+      // If original code used window.load for createFloatingHearts, call it here as well.
+      window.addEventListener('load', function() {
+        // ...existing load tasks...
+        if (typeof createFloatingHearts === 'function') createFloatingHearts();
+        tryPlayMusic();
+      });
+
+      // Manual play button (fallback)
+      if (playButton) {
+        playButton.addEventListener('click', function() {
+          bgMusic.play().then(() => {
+            if (playOverlay) {
+              playOverlay.style.display = 'none';
+              playOverlay.setAttribute('aria-hidden', 'true');
+            }
+          }).catch(() => {
+            // ignore
+          });
+        });
+      }
+
+      // Optional: pause/resume when user clicks book (keeps UX)
+      const book = document.getElementById('book');
+      if (book) {
+        book.addEventListener('click', function(e) {
+          // existing click guard behavior preserved elsewhere; do not change autoplay handling here
+        });
+      }
+    })();
   </script>
 </body>
 </html>
